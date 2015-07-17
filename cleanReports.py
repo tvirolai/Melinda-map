@@ -40,7 +40,7 @@ def iterateCountries():
 		# Jos maakoodia ei löydy virallisten koodien listalta, niiden summat lisätään kohtaan "tuntematon koodi"
 		if not country in tarkistusTaulu:
 			cleaned_countryCodes['xx'] += int(countryCodes[country])
-			discarded_countryCodes[country] = countryCodes[country]
+			discarded_countryCodes[country] = int(countryCodes[country])
 		else:
 			# Jos löytyy "käytä"-muoto, koodin summa lisätään virallisen muodon summaan
 			if tarkistusTaulu[country] != 0:
@@ -56,12 +56,18 @@ def iterateCountries():
 					cleaned_countryCodes[country] += int(countryCodes[country])
 
 def writeToFile():
-	cleaned_countryCodesSorted = printDictSortedByValue(cleaned_countryCodes)
-	resultAsString = ""
-	for line in cleaned_countryCodesSorted:
-		resultAsString += "{0},{1}\n".format(line[0], line[1])
 	with open('countryCodes_verified.csv', 'wt') as f:
-		f.write(resultAsString)
+		f.write(stringify(cleaned_countryCodes))
+	with open('discarded_countryCodes.csv', 'wt') as f:
+		f.write(stringify(discarded_countryCodes))
+
+def stringify(variable):
+	# Function accepts a dict, sorts it by value and returns as string
+	variable = printDictSortedByValue(variable)
+	variableAsString = ""
+	for line in variable:
+		variableAsString += "{0},{1}\n".format(line[0], line[1])
+	return variableAsString
 
 def printDictSortedByValue(variable):
   sortedDict = sorted(variable.items(), key=operator.itemgetter(1), reverse=True)
@@ -70,5 +76,5 @@ def printDictSortedByValue(variable):
 iterateCountries()
 writeToFile()
 #print(cleaned_countryCodes)
-#print(sum(cleaned_countryCodes.values()))
+print(sum(discarded_countryCodes.values()))
 #print(tarkistusTaulu)
