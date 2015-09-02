@@ -1,0 +1,231 @@
+1. Suomi - 2149857
+2. Yhdysvallat - 896890
+3. Ei paikkaa, tuntematon tai määrittelemätön - 767362
+4. Saksa - 639886
+5. Iso-Britannia (Yhdistynyt kuningaskunta) - 629702
+6. Ruotsi - 488776
+7. Venäjä (1992-) - 327593
+8. Ranska - 206142
+9. Alankomaat - 100790
+10. Tanska - 93586
+11. Sveitsi - 76329
+12. Norja - 74176
+13. Italia - 65690
+14. Itävalta - 33115
+15. Unkari - 32738
+16. Kanada - 30243
+17. Belgia - 29190
+18. Puola - 28969
+19. Viro (1992-) - 27558
+20. Espanja - 25250
+21. Japani - 20718
+22. Luxemburg - 17484
+23. Intia - 17288
+24. Georgia (1992-) - 16563
+25. Australia - 11890
+26. Taiwan (1949-) - 9776
+27. Romania - 9363
+28. Israel - 7626
+29. Tsekki (1994-) - 6563
+30. Singapore - 5828
+31. Kreikka - 5299
+32. Meksiko - 4904
+33. Latvia (1992-) - 4803
+34. Portugali - 4740
+35. Liettua (1992-) - 4633
+36. Bulgaria - 4458
+37. Islanti - 4392
+38. Irlanti - 3972
+39. Argentiina - 3586
+40. Brasilia - 3537
+41. Kiina - 3339
+42. Etelä-Korea - 3339
+43. Turkki - 3098
+44. Filippiinit - 2695
+45. Ukraina (1992-) - 2408
+46. Etelä-Afrikka - 2406
+47. Kroatia (1993-) - 2246
+48. Slovakia (1994-) - 2191
+49. Kuuba - 2058
+50. Serbia - 1877
+51. Egypti - 1737
+52. Iran - 1615
+53. Uusi-Seelanti - 1548
+54. Libanon - 1503
+55. Kenia - 1377
+56. Columbia - 1368
+57. Bosnia ja Hertsegovina (1993-) - 1290
+58. Venezuela - 1282
+59. Valko-Venäjä (1992-) - 1248
+60. Slovenia (1993-) - 1240
+61. Thaimaa - 1194
+62. Liechtenstein - 1104
+63. Peru - 1032
+64. Vatikaanivaltio - 951
+65. Niger - 903
+66. Albania - 803
+67. Chile - 786
+68. Pakistan - 727
+69. Marokko - 724
+70. Makedonia (1993-) - 633
+71. Tansania - 611
+72. Namibia - 610
+73. Guinea-Bissau - 578
+74. Pohjois-Korea - 538
+75. Malesia - 506
+76. Swazimaa - 492
+77. Seychellit - 481
+78. Mongolia - 451
+79. Indonesia - 451
+80. Färsaaret - 447
+81. Vietnam - 444
+82. Irak - 402
+83. Sri Lanka - 399
+84. Algeria - 393
+85. Costa Rica - 382
+86. Nigeria - 317
+87. Kypros - 306
+88. Monaco - 300
+89. Etiopia - 298
+90. Uusi-Kaledonia - 292
+91. Sambia - 289
+92. Kazakstan (1992-) - 265
+93. Uruguay - 253
+94. Syyria - 251
+95. Ecuador - 248
+96. Kamerun - 237
+97. Senegal - 234
+98. Bangladesh - 232
+99. Tunisia - 214
+100. Saudi-Arabia - 203
+101. Angola - 201
+102. Armenia (1992-) - 200
+103. Arabiemiirikunnat - 198
+104. Dominikaaninen tasavalta - 187
+105. Bolivia - 187
+106. Kiribati - 182
+107. Nepali - 173
+108. Jamaika - 161
+109. Zimbabwe - 160
+110. Nicaragua - 151
+111. Panama - 147
+112. Kuwait - 142
+113. Malta - 141
+114. Mosambik - 138
+115. Jordania - 131
+116. Uganda - 126
+117. Montenegro - 125
+118. Moldova (1992-) - 121
+119. Salvador - 100
+120. Ghana - 99
+121. Sierra Leone - 99
+122. Cooksaaret - 95
+123. Kirgisia (1992-) - 93
+124. Guatemala - 93
+125. Grönlanti - 92
+126. Azerbaidzan (1992-) - 92
+127. Uzbekistan (1992-) - 77
+128. Malawi - 65
+129. Mauritius - 63
+130. Afganistan - 60
+131. Julkaisumaa vaihtelee, useita - 57
+132. Paraguay - 51
+133. Puerto Rico - 49
+134. Fidzi - 48
+135. Libya - 43
+136. Sudan - 43
+137. Norsunluurannikko - 43
+138. Botswana - 43
+139. Madagaskar - 41
+140. Papua Uusi-Guinea - 40
+141. Honduras - 37
+142. Kongo (Brazzaville) - 34
+143. Kosovo - 33
+144. Qatar - 32
+145. Alankomaiden Antillit - 32
+146. Eritrea - 31
+147. Myanmar - 30
+148. Laos - 29
+149. Kookossaaret - 28
+150. Turkmenistan (1992-) - 27
+151. San Marino - 26
+152. Antigua ja Barbuda - 22
+153. Trinidad ja Tobago - 22
+154. Kongo (Kinshasa), ent. Zaire - 22
+155. Brittiläinen Intian valtameren alue - 22
+156. Tadzikistan (1992-) - 21
+157. Haiti - 21
+158. Gabon - 19
+159. Burundi - 19
+160. Kap Verde - 19
+161. Barbados - 18
+162. Somalia - 17
+163. Andorra - 17
+164. Mali - 17
+165. Grenada - 16
+166. Guyana - 16
+167. Saint Vincent ja Grenadiinit - 15
+168. Guinea - 14
+169. Bermuda - 14
+170. Yhdysvaltain Tyynen meren saaret - 14
+171. Kambodza - 13
+172. Ruanda - 13
+173. Djibouti - 12
+174. Gibraltar - 12
+175. Lesotho - 12
+176. Oman - 12
+177. Réunion - 10
+178. Saint Lucia - 10
+179. Brunei - 10
+180. Ranskan Guayana - 9
+181. Liberia - 9
+182. Bahama - 9
+183. Länsiranta - 8
+184. São Tomé ja Príncipe - 8
+185. Samoa - 8
+186. Surinam - 8
+187. Päiväntasaajan Guinea - 7
+188. Saint Helena - 7
+189. Bahrain - 7
+190. Jemen - 7
+191. Montserrat - 7
+192. Burkina Faso - 7
+193. Yhdysvaltain Neitsytsaaret - 6
+194. Pohjoiset Marianasaaret - 6
+195. Belize - 6
+196. Turks- ja Caicossaaret - 6
+197. Ranskan Polynesia - 6
+198. Mauritania - 5
+199. Vanuatu - 5
+200. Dominica - 5
+201. Tsad - 5
+202. Caymansaaret - 4
+203. Joulusaari - 4
+204. Keski-Afrikan tasavalta - 4
+205. Marshallinsaaret - 4
+206. Guadeloupe - 4
+207. Amerikan Samoa - 4
+208. Mikronesian liittovaltio - 4
+209. Tokelau - 3
+210. Togo - 3
+211. Martinique - 3
+212. Malediivit - 3
+213. Nauru - 3
+214. Bhutan - 3
+215. Guam - 3
+216. Etelä-Georgia ja Eteläiset Sandwichsaaret - 3
+217. Gambia - 3
+218. Itä-Timor - 3
+219. Niue - 2
+220. Benin - 2
+221. Yhdysvaltain Karibian meren saaret - 2
+222. Ranskan ulkopuoliset eteläiset alueet - 2
+223. Falklandinsaaret - 2
+224. Gazan alue - 2
+225. Mayotte - 1
+226. Brittiläiset Neitsytsaaret - 1
+227. Aruba - 1
+228. Palau - 1
+229. Etelä-Sudan - 1
+230. Tuvalu - 1
+231. Tonga - 1

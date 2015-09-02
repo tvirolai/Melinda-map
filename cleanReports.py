@@ -18,6 +18,7 @@ import operator
 cleaned_countryCodes = {'xx': 0}
 discarded_countryCodes = {}
 
+
 def normalize(code):
 	return code.strip('[').strip(']')
 
@@ -36,6 +37,7 @@ with open('countryCodes.csv', 'rt') as f:
 	countryCodes = dict(csv.reader(f))
 
 def iterateCountries():
+	merged_countryCodes = 0
 	for country in countryCodes:
 		# Jos maakoodia ei löydy virallisten koodien listalta, niiden summat lisätään kohtaan "tuntematon koodi"
 		if not country in tarkistusTaulu:
@@ -44,6 +46,7 @@ def iterateCountries():
 		else:
 			# Jos löytyy "käytä"-muoto, koodin summa lisätään virallisen muodon summaan
 			if tarkistusTaulu[country] != 0:
+				merged_countryCodes += int(countryCodes[country])
 				if not tarkistusTaulu[country] in cleaned_countryCodes:
 					cleaned_countryCodes[tarkistusTaulu[country]] = int(countryCodes[country])
 				else:
@@ -54,6 +57,7 @@ def iterateCountries():
 					cleaned_countryCodes[country] = int(countryCodes[country])
 				else:
 					cleaned_countryCodes[country] += int(countryCodes[country])
+	print("Merged countrycodes: {0}.".format(merged_countryCodes))
 
 def writeToFile():
 	with open('countryCodes_verified.csv', 'wt') as f:
@@ -76,5 +80,7 @@ def printDictSortedByValue(variable):
 iterateCountries()
 writeToFile()
 #print(cleaned_countryCodes)
-print(sum(discarded_countryCodes.values()))
+sumOfDiscardedCodes = sum(discarded_countryCodes.values())
+print("Discarded countrycodes: {0}".format(sumOfDiscardedCodes))
+
 #print(tarkistusTaulu)
