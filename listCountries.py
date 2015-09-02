@@ -19,6 +19,40 @@ class Lister(object):
     
     self.seqfiles = sorted([x for x in self.seqfiles if x[-4:] == '.seq'])
 
+  def kielikoodit(self):
+
+    languages = {}
+    numberOfSeqfiles = len(self.seqfiles)
+    readFileCount = 0
+    totalSkippedRecords = 0
+    totalNumberOfRecords = 0
+    for seqfile in self.seqfiles:
+      with open(seqfile, 'rt') as f:
+        content = f.read().split('\n')
+        content, skippedRecordCount, recordCount = self.weedSupplements(content)
+        totalNumberOfRecords += recordCount
+        if skippedRecordCount > 0:
+          totalSkippedRecords += skippedRecordCount
+        for row in content:
+          if row[10:13] == '008':
+            fieldContents = row[18:]
+            try:
+              languageCode = fieldContents[35:38]
+            except:
+              next
+              if (languageCode[2] == '^'):
+                languageCode = languageCode[:2]
+            languages = self.countCountries(languageCode, languages)
+        readFileCount += 1
+        if readFileCount % 1000 == 0:
+          print("Read {0} / {1} files.".format(readFileCount, numberOfSeqfiles))
+    sortedLanguages = self.printDictSortedByValue(languages)
+    for country in sortedLanguages:
+      print(country[0], country[1])
+    self.writeToFile(sortedLanguages, 'languageCodes.csv')
+
+    print("Skipped {0} / {1} records".format(totalSkippedRecords, totalNumberOfRecords))
+
   def julkaisumaat(self):
 
     countries = {}
@@ -46,7 +80,7 @@ class Lister(object):
     sortedCountries = self.printDictSortedByValue(countries)
     for country in sortedCountries:
       print(country[0], country[1])
-    self.writeToFile(sortedCountries)
+    self.writeToFile(sortedCountries, 'countryCodes.csv')
 
     print("Skipped {0} / {1} records".format(totalSkippedRecords, totalNumberOfRecords))
 
@@ -83,9 +117,9 @@ class Lister(object):
         print(currentRecord)
     return weededContents, skippedRecordCount, totalRecordCount
 
-  def writeToFile(self, sortedCountries):
-    with open('countryCodes.csv', 'wt') as f:
-      for country in sortedCountries:
+  def writeToFile(self, sortedDict, filename):
+    with open(filename, 'wt') as f:
+      for country in sortedDict:
         asString = "{0},{1}\n".format(country[0], country[1])
         f.write(asString)
 
@@ -104,7 +138,10 @@ class Lister(object):
 if __name__ == '__main__':
   parser = argparse.ArgumentParser(description="Aleph Seq dump processor")
   parser.add_argument("-j", "--julkaisumaat", help="Hae listaus julkaisumaista", action='store_true')
+  parser.add_argument("-k", "--kielikoodit", help="Hae listaus kielikoodeista", action='store_true')
   args = parser.parse_args()
   lister = Lister()
   if args.julkaisumaat:
     lister.julkaisumaat()
+  if args.kielikoodit:
+    lister.kielikoodit()

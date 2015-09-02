@@ -13,7 +13,6 @@ koodiDict = {}
 openedCodes = []
 totalCount = 0
 
-
 def percentage(number):
     return round(float(number) / totalCount * 100, 1)
 
