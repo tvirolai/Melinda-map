@@ -1,20 +1,19 @@
 "use strict";
 
-var dataset = [];
+
 var w = 1000;
 var h = 600;
 
 var margin = 70;
 
-function initialize(callback) {
-
-  d3.tsv("./data/countriesAsTSV.tsv", function(d) {
+function initialize(file, callback) {
+  d3.tsv(file, function(d) {
     d.forEach(function(item) {
       item.Maara = Number(item.Maara);
       item.Osuus = Number(item.Osuus);
     });
-    dataset = parseData(d);
-    callback();
+    var dataset = parseData(d);
+    callback(dataset);
   });
 }
 
@@ -37,11 +36,12 @@ function parseData(data) {
   return newData;
 }
 
-function draw() {
-
+function draw(data) {
+  var dataset = data;
   var currentIndex = 0;
   var currentData = [];
   currentData = dataset.slice(currentIndex, currentIndex + 10);
+  currentIndex = 10;
 
   var xScale = d3.scale.ordinal()
     .domain(d3.range(11))
@@ -144,15 +144,15 @@ function draw() {
 
   d3.select("#otsikko")
     .on("click", function() {
-      if (currentIndex + 10 < dataset.length) {
+      if (currentIndex + 10 <= dataset.length) {
         currentData = dataset.slice(currentIndex, currentIndex + 10);
         currentIndex += 10;
       } else {
-        currentData = dataset.slice(dataset.length - 10, dataset.length - 1);
+        currentData = dataset.slice(dataset.length - 10, dataset.length);
         currentIndex = 0;
       }
       
-      yScale.domain([0, currentData[0].Maara + 100]);
+      yScale.domain([0, currentData[0].Maara + (currentData[0].Maara * 0.1)]);
       svg.selectAll("rect")
         .data(currentData)
         .transition()
@@ -186,4 +186,5 @@ function draw() {
     });
 }
 
-initialize(draw);
+initialize("./data/countriesAsTSV.tsv", draw);
+//initialize("./data/languagesAsTSV.tsv", draw);
