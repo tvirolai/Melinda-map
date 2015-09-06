@@ -24,6 +24,7 @@ function parseData(data) {
   var previousAmount = 0;
   data.forEach(function(d, i) {
     if (d.Maara !== previousAmount) {
+      // Lisätään myös järjestysnumero datassa
       d.Indeksi = i + 1;
       newData.push(d);
       previousAmount = d.Maara;
@@ -77,9 +78,9 @@ function draw(data) {
     .attr("height", function(d) {
       return yScale(0) - yScale(d.Maara);
     })
-    .attr("fill", function(d, i) {
-      var value = 255 - Math.round(255 / (i + 1));
-      return "rgb(0, 255, " + value + ")";
+    .attr("fill", function() {
+      //var value = 255 - Math.round(255 / (i + 1));
+      return "rgb(0, 0, 255)";
     })
     .on("mouseover", function(d) {
       //Get this bar"s x/y values, then augment for the tooltip
@@ -113,8 +114,11 @@ function draw(data) {
     .on("mouseout", function() {
       //Hide the tooltip
       d3.select("#tooltip").classed("hidden", true);
-      d3.select(this).attr("fill", function(d, i) {
-        var value = 255 - Math.round(255 / (i + 1));
+      d3.select(this)
+      .transition()
+      .ease("circle")
+      .duration(500)
+      .attr("fill", function() {
         return "rgb(0, 0, 255)";
       });
 
@@ -158,6 +162,7 @@ function draw(data) {
       svg.selectAll("rect")
         .data(currentData)
         .transition()
+        .ease("linear")
         .attr("x", function(d, i) {
           return xScale(i);
         })
@@ -168,13 +173,19 @@ function draw(data) {
         .attr("height", function(d) {
           return yScale(0) - yScale(d.Maara);
         })
-        .attr("fill", function(d, i) {
-          var value = 255 - Math.round(255 / (i + 1));
-          return "rgb(0, 255, " + value + ")";
+        .attr("fill", function() {
+          return "rgb(0, 0, 255)";
         });
 
       svg.selectAll("text")
         .data(currentData)
+        .transition()
+        .ease("linear")
+        .duration(500)
+        .each("start", function() {
+          d3.select(this)
+            .attr("fill", "black");
+        })
         .text(function(d) {
           if (d.Koodi.length < 10) {
             return d.Koodi;
@@ -187,6 +198,11 @@ function draw(data) {
         })
         .attr("y", function(d) {
           return yScale(d.Maara) + 10;
+        })
+        .each("end", function() {
+          d3.select(this)
+            .attr("fill", "white")
+            .attr("font-size", "10px");       
         });
 
       svg.select(".y.axis")
@@ -196,5 +212,5 @@ function draw(data) {
     });
 }
 
-initialize("./data/countriesAsTSV.tsv", draw);
-//initialize("./data/languagesAsTSV.tsv", draw);
+//initialize("./data/countriesAsTSV.tsv", draw);
+initialize("./data/languagesAsTSV.tsv", draw);
