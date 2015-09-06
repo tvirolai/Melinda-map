@@ -4,7 +4,7 @@
 var w = 1000;
 var h = 600;
 
-var margin = 70;
+var margin = 60;
 
 function initialize(file, callback) {
   d3.tsv(file, function(d) {
@@ -49,7 +49,7 @@ function draw(data) {
 
   var yScale = d3.scale.linear()
     .domain([0, currentData[0].Maara + (currentData[0].Maara * 0.1)])
-    .range([h, 0]);
+    .range([h - margin, 0 + margin / 5]);
 
   var yAxis = d3.svg.axis()
     .scale(yScale)
@@ -77,13 +77,14 @@ function draw(data) {
     .attr("height", function(d) {
       return yScale(0) - yScale(d.Maara);
     })
-    .attr("fill", function(d) {
-      return "rgb(0, 0, 255)";
+    .attr("fill", function(d, i) {
+      var value = 255 - Math.round(255 / (i + 1));
+      return "rgb(0, 255, " + value + ")";
     })
     .on("mouseover", function(d) {
       //Get this bar"s x/y values, then augment for the tooltip
-      var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.rangeBand() / 2;
-      var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + h / 6;
+      var xPosition = w / 6;
+      var yPosition = 0;
 
       d3.select(this)
         .attr("fill", "red");
@@ -105,14 +106,15 @@ function draw(data) {
           return "" + d.Maara + " (" + Math.round(d.Osuus) + " %)";
         });
 
-            //Show the tooltip
+      //Show the tooltip
       d3.select("#tooltip").classed("hidden", false);
     })
     
     .on("mouseout", function() {
       //Hide the tooltip
       d3.select("#tooltip").classed("hidden", true);
-      d3.select(this).attr("fill", function(d) {
+      d3.select(this).attr("fill", function(d, i) {
+        var value = 255 - Math.round(255 / (i + 1));
         return "rgb(0, 0, 255)";
       });
 
@@ -165,12 +167,20 @@ function draw(data) {
         .attr("width", xScale.rangeBand())
         .attr("height", function(d) {
           return yScale(0) - yScale(d.Maara);
+        })
+        .attr("fill", function(d, i) {
+          var value = 255 - Math.round(255 / (i + 1));
+          return "rgb(0, 255, " + value + ")";
         });
 
       svg.selectAll("text")
         .data(currentData)
         .text(function(d) {
-          return d.Koodi;
+          if (d.Koodi.length < 10) {
+            return d.Koodi;
+          } else {
+            return d.Koodi.slice(0,3) + '...';
+          }
         })
         .attr("x", function(d, i) {
           return xScale(i) + xScale.rangeBand() / 2;

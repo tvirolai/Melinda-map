@@ -20,6 +20,10 @@
               pointer-events: none;
       }
 
+      #tooltip:hover {
+        fill: red;
+      }
+
       #tooltip.hidden {
               display: none;
       }
@@ -42,6 +46,7 @@
           font-size: 11px;
       }
       #otsikko {
+        position: center;
         font-family: sans-serif;
         color: red;
       }
@@ -52,7 +57,7 @@
         <p><span id="maa"></span></p>
         <p><span id="maara"></span></p>
   </div>
-  <div id="otsikko">Melindan julkaisumaita
+  <div id="otsikko">Klikkaa tästä
   </div>
     <script type="text/javascript" src="./plot.js"></script>
   </body>
