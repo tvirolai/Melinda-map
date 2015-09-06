@@ -23,8 +23,9 @@ function initialize(callback) {
 function parseData(data) {
   var newData = [];
   var previousAmount = 0;
-  data.forEach(function(d) {
+  data.forEach(function(d, i) {
     if (d.Maara !== previousAmount) {
+      d.Indeksi = i + 1;
       newData.push(d);
       previousAmount = d.Maara;
     } else {
@@ -40,7 +41,7 @@ function draw() {
 
   var currentIndex = 0;
   var currentData = [];
-  currentData = dataset.splice(currentIndex, currentIndex + 10);
+  currentData = dataset.slice(currentIndex, currentIndex + 10);
 
   var xScale = d3.scale.ordinal()
     .domain(d3.range(11))
@@ -77,12 +78,12 @@ function draw() {
       return yScale(0) - yScale(d.Maara);
     })
     .attr("fill", function(d) {
-      return "rgb(100, 0, " + (Math.round(d.Osuus * 10)) + ")";
+      return "rgb(0, 0, 255)";
     })
     .on("mouseover", function(d) {
       //Get this bar"s x/y values, then augment for the tooltip
       var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.rangeBand() / 2;
-      var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + h / 3;
+      var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + h / 6;
 
       d3.select(this)
         .attr("fill", "red");
@@ -93,7 +94,7 @@ function draw() {
         .style("top", yPosition + "px")
         .select("#maa")
         .text(function() {
-          return "" + d.Maa;
+          return "" + d.Indeksi + ". " + d.Maa;
         });
 
       d3.select("#tooltip")
@@ -112,7 +113,7 @@ function draw() {
       //Hide the tooltip
       d3.select("#tooltip").classed("hidden", true);
       d3.select(this).attr("fill", function(d) {
-        return "rgb(100, 0, " + (Math.round(d.Osuus * 10)) + ")";
+        return "rgb(0, 0, 255)";
       });
 
     });
@@ -143,7 +144,14 @@ function draw() {
 
   d3.select("#otsikko")
     .on("click", function() {
-      currentData = dataset.splice(currentIndex, currentIndex + 10);
+      if (currentIndex + 10 < dataset.length) {
+        currentData = dataset.slice(currentIndex, currentIndex + 10);
+        currentIndex += 10;
+      } else {
+        currentData = dataset.slice(dataset.length - 10, dataset.length - 1);
+        currentIndex = 0;
+      }
+      
       yScale.domain([0, currentData[0].Maara + 100]);
       svg.selectAll("rect")
         .data(currentData)
@@ -157,9 +165,6 @@ function draw() {
         .attr("width", xScale.rangeBand())
         .attr("height", function(d) {
           return yScale(0) - yScale(d.Maara);
-        })
-        .attr("fill", function(d) {
-          return "rgb(100, 0, " + (Math.round(d.Osuus * 10)) + ")";
         });
 
       svg.selectAll("text")
