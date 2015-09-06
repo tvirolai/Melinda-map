@@ -1,6 +1,5 @@
 "use strict";
 
-
 var w = 1000;
 var h = 600;
 
@@ -116,7 +115,7 @@ function draw(data) {
       d3.select("#tooltip").classed("hidden", true);
       d3.select(this)
       .transition()
-      .ease("circle")
+      .ease("linear")
       .duration(500)
       .attr("fill", function() {
         return "rgb(0, 0, 255)";
@@ -201,8 +200,7 @@ function draw(data) {
         })
         .each("end", function() {
           d3.select(this)
-            .attr("fill", "white")
-            .attr("font-size", "10px");       
+            .attr("fill", "white");       
         });
 
       svg.select(".y.axis")
@@ -212,5 +210,5 @@ function draw(data) {
     });
 }
 
-//initialize("./data/countriesAsTSV.tsv", draw);
-initialize("./data/languagesAsTSV.tsv", draw);
+initialize("./data/countriesAsTSV.tsv", draw);
+//initialize("./data/languagesAsTSV.tsv", draw);
