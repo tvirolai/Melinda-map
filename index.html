@@ -25,7 +25,7 @@
       }
 
       #tooltip.hidden {
-              display: true;
+              display: none;
       }
 
       #tooltip p {
@@ -54,12 +54,24 @@
   </head>
   <body>
   <div id="tooltip" class="hidden">
-  <p><strong>Jooo!</strong></p>
+  <p><strong>Tietoja</strong></p>
         <p><span id="maa"></span></p>
         <p><span id="maara"></span></p>
-  </div>
-  <div id="otsikko">Klikkaa tästä
-  </div>
+
     <script type="text/javascript" src="./plot.js"></script>
-  </body>
+      </div>
+<center>
+  <div id="kaavio"></div>
+  </center>
+  <div id="napit">
+  <center>
+  <button id="miinusKymmenen">Kymmenen taaksepäin</button>
+  <button id="miinusYksi">Yksi taaksepäin</button>
+  <button id="plusYksi">Yksi eteenpäin</button>
+  <button id="plusKymmenen">Kymmenen eteenpäin</button>
+  </center>
+  </div>
+  <br />
+
+</body>
 </html>

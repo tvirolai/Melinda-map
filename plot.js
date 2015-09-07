@@ -41,7 +41,6 @@ function draw(data) {
   var currentIndex = 0;
   var currentData = [];
   currentData = dataset.slice(currentIndex, currentIndex + 10);
-  currentIndex = 10;
 
   var xScale = d3.scale.ordinal()
     .domain(d3.range(11))
@@ -57,8 +56,8 @@ function draw(data) {
     .ticks(10);
 
   //Create SVG element
-  var svg = d3.select("body")
-    .append("svg")
+  var svg = d3.select("#kaavio")
+    .append("svg:svg")
     .attr("width", w)
     .attr("height", h);
 
@@ -79,11 +78,11 @@ function draw(data) {
     })
     .attr("fill", function(d, i) {
       var value = Math.round(252 / (i + 1));
-      return "rgb(0, " + value + ", " + value +")";
+      return "rgb(0, 0, 255)";
     })
     .on("mouseover", function(d) {
       //Get this bar"s x/y values, then augment for the tooltip
-      var xPosition = w - 300;
+      var xPosition = w;
       var yPosition = 0 + 20;
 
       d3.select(this)
@@ -103,7 +102,13 @@ function draw(data) {
         .style("top", yPosition + "px")
         .select("#maara")
         .text(function() {
-          return "" + d.Maara + " nimekettä (" + Math.round(d.Osuus) + " % kaikista)";
+          //var osuus = Math.round(d.Osuus);
+          var osuus = (d.Osuus).toFixed(1);
+          if (osuus > 0) {
+            return "" + d.Maara + " nimekettä (" + osuus + " %)";
+          } else {
+            return "" + d.Maara + " nimekettä";
+          }   
         });
 
       //Show the tooltip
@@ -139,7 +144,7 @@ function draw(data) {
       return yScale(d.Maara) + 10;
     })
     .attr("font-family", "sans-serif")
-    .attr("font-size", "11px")
+    .attr("font-size", "12px")
     .attr("fill", "white");
 
   svg.append("g")
@@ -147,16 +152,41 @@ function draw(data) {
     .attr("transform", "translate(" + margin + ", 0)")
     .call(yAxis);
 
-  d3.select("#otsikko")
+  d3.select("#plusYksi")
     .on("click", function() {
+      update(1);
+    });
+
+  d3.select("#plusKymmenen")
+    .on("click", function() {
+      update(10);
+    });
+
+  d3.select("#miinusKymmenen")
+    .on("click", function() {
+      update(-10);
+    });
+
+  d3.select("#miinusYksi")
+    .on("click", function() {
+      update(-1);
+    });
+
+    function update(amount) {
+
+      if (currentIndex += amount > 0) {
+        currentIndex += amount;
+      } else {
+        currentIndex = 0;
+      }
+     
       if (currentIndex + 10 <= dataset.length) {
         currentData = dataset.slice(currentIndex, currentIndex + 10);
-        currentIndex += 10;
       } else {
         currentData = dataset.slice(dataset.length - 10, dataset.length);
         currentIndex = 0;
       }
-      
+
       yScale.domain([0, currentData[0].Maara + (currentData[0].Maara * 0.1)]);
       svg.selectAll("rect")
         .data(currentData)
@@ -207,7 +237,7 @@ function draw(data) {
       .transition()
       .duration(1000)
       .call(yAxis);
-    });
+    }
 }
 
 // initialize("./data/countriesAsTSV.tsv", draw);
