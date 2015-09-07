@@ -77,14 +77,14 @@ function draw(data) {
     .attr("height", function(d) {
       return yScale(0) - yScale(d.Maara);
     })
-    .attr("fill", function() {
-      //var value = 255 - Math.round(255 / (i + 1));
-      return "rgb(0, 0, 255)";
+    .attr("fill", function(d, i) {
+      var value = Math.round(252 / (i + 1));
+      return "rgb(0, " + value + ", " + value +")";
     })
     .on("mouseover", function(d) {
       //Get this bar"s x/y values, then augment for the tooltip
-      var xPosition = w / 6;
-      var yPosition = 0;
+      var xPosition = w - 300;
+      var yPosition = 0 + 20;
 
       d3.select(this)
         .attr("fill", "red");
@@ -103,7 +103,7 @@ function draw(data) {
         .style("top", yPosition + "px")
         .select("#maara")
         .text(function() {
-          return "" + d.Maara + " (" + Math.round(d.Osuus) + " %)";
+          return "" + d.Maara + " nimekettä (" + Math.round(d.Osuus) + " % kaikista)";
         });
 
       //Show the tooltip
@@ -116,7 +116,7 @@ function draw(data) {
       d3.select(this)
       .transition()
       .ease("linear")
-      .duration(500)
+      .duration(200)
       .attr("fill", function() {
         return "rgb(0, 0, 255)";
       });
@@ -210,5 +210,5 @@ function draw(data) {
     });
 }
 
-initialize("./data/countriesAsTSV.tsv", draw);
-//initialize("./data/languagesAsTSV.tsv", draw);
+// initialize("./data/countriesAsTSV.tsv", draw);
+initialize("./data/languagesAsTSV.tsv", draw);
