@@ -38,12 +38,13 @@ function parseData(data) {
 
 function draw(data) {
   var dataset = data;
-  var currentIndex = 0;
+  var currentFirstIndex = 0;
+  var currentLastIndex = 10;
   var currentData = [];
-  currentData = dataset.slice(currentIndex, currentIndex + 10);
+  currentData = dataset.slice(currentFirstIndex, currentLastIndex);
 
   var xScale = d3.scale.ordinal()
-    .domain(d3.range(11))
+    .domain(d3.range(currentData.length))
     .rangeRoundBands([margin, w], 0.02); // Low and high value for the range, spacing between bands
 
   var yScale = d3.scale.linear()
@@ -76,8 +77,7 @@ function draw(data) {
     .attr("height", function(d) {
       return yScale(0) - yScale(d.Maara);
     })
-    .attr("fill", function(d, i) {
-      var value = Math.round(252 / (i + 1));
+    .attr("fill", function() {
       return "rgb(0, 0, 255)";
     })
     .on("mouseover", function(d) {
@@ -152,16 +152,6 @@ function draw(data) {
     .attr("transform", "translate(" + margin + ", 0)")
     .call(yAxis);
 
-  d3.select("#plusYksi")
-    .on("click", function() {
-      update(1);
-    });
-
-  d3.select("#plusKymmenen")
-    .on("click", function() {
-      update(10);
-    });
-
   d3.select("#miinusKymmenen")
     .on("click", function() {
       update(-10);
@@ -171,73 +161,147 @@ function draw(data) {
     .on("click", function() {
       update(-1);
     });
+  d3.select("#plusYksi")
+    .on("click", function() {
+      append(1);
+    });
 
-    function update(amount) {
+  d3.select("#plusKymmenen")
+    .on("click", function() {
+      update(10);
+    });
 
-      if (currentIndex += amount > 0) {
-        currentIndex += amount;
-      } else {
-        currentIndex = 0;
-      }
-     
-      if (currentIndex + 10 <= dataset.length) {
-        currentData = dataset.slice(currentIndex, currentIndex + 10);
-      } else {
-        currentData = dataset.slice(dataset.length - 10, dataset.length);
-        currentIndex = 0;
-      }
+  function append(amount) {
+    currentLastIndex = currentLastIndex - 1 + amount;
+    currentData.push(dataset[currentLastIndex]);
+    xScale.domain(d3.range(currentData.length));
+    yScale.domain([0, currentData[0].Maara + (currentData[0].Maara * 0.1)]);
+    var bars = svg.selectAll("rect")
+      .data(currentData);
 
-      yScale.domain([0, currentData[0].Maara + (currentData[0].Maara * 0.1)]);
-      svg.selectAll("rect")
-        .data(currentData)
-        .transition()
-        .ease("linear")
-        .attr("x", function(d, i) {
+    bars.enter()                //References the enter selection (a subset of the update selection)
+      .append("rect")             //Creates a new rect
+      .attr("x", w)             //Sets the initial x position of the rect beyond the far right edge of the SVG
+      .attr("x", function(d, i) {
+        return xScale(i);
+      })
+      .attr("y", function(d) {
+        return yScale(d.Maara);
+      })
+      .attr("width", xScale.rangeBand())
+      .attr("height", function(d) {
+        return yScale(0) - yScale(d.Maara);
+      })
+      .attr("fill", function() {
+        return "rgb(0, 255, 0)";
+      });
+
+      //Update…
+      bars.transition()             //Initiate a transition on all elements in the update selection (all rects)
+        .duration(500)
+        .attr("x", function(d, i) {       //Set new x position, based on the updated xScale
           return xScale(i);
         })
-        .attr("y", function(d) {
+        .attr("y", function(d) {        //Set new y position, based on the updated yScale
           return yScale(d.Maara);
         })
-        .attr("width", xScale.rangeBand())
+        .attr("width", xScale.rangeBand())    //Set new width value, based on the updated xScale
         .attr("height", function(d) {
           return yScale(0) - yScale(d.Maara);
-        })
-        .attr("fill", function() {
-          return "rgb(0, 0, 255)";
         });
 
       svg.selectAll("text")
-        .data(currentData)
-        .transition()
-        .ease("linear")
-        .duration(500)
-        .each("start", function() {
-          d3.select(this)
-            .attr("fill", "black");
-        })
-        .text(function(d) {
+       .data(currentData)
+       .transition()
+       .duration(500)
+       .text(function(d) {
           if (d.Koodi.length < 10) {
             return d.Koodi;
           } else {
-            return d.Koodi.slice(0,3) + '...';
+            return d.Koodi.slice(0,3) + "...";
           }
-        })
-        .attr("x", function(d, i) {
-          return xScale(i) + xScale.rangeBand() / 2;
-        })
-        .attr("y", function(d) {
-          return yScale(d.Maara) + 10;
-        })
-        .each("end", function() {
-          d3.select(this)
-            .attr("fill", "white");       
-        });
-
-      svg.select(".y.axis")
-      .transition()
-      .duration(1000)
-      .call(yAxis);
+          })
+       .attr("x", function(d, i) {
+        return xScale(i) + xScale.rangeBand() / 2;
+       })
+       .attr("y", function(d) {
+         return yScale(d.Maara) + 10;
+       })
     }
+
+  function update(amount) {
+
+    if (currentFirstIndex + amount > 0) {
+      currentFirstIndex += amount;
+    } else {
+      currentFirstIndex = 0;
+    }
+   
+    if (currentFirstIndex + 10 <= dataset.length) {
+      currentData = dataset.slice(currentFirstIndex, currentFirstIndex + 10);
+    } else {
+      currentData = dataset.slice(dataset.length - 10, dataset.length);
+      currentFirstIndex = 0;
+    }
+
+    redraw(currentData);
+  }
+
+  function redraw(data) {
+    //var currentData = data;
+    yScale.domain([0, currentData[0].Maara + (currentData[0].Maara * 0.1)]);
+
+    svg.selectAll("rect")
+      .data(currentData)
+      .transition()
+      .ease("linear")
+      .attr("x", function(d, i) {
+        return xScale(i);
+      })
+      .attr("y", function(d) {
+        return yScale(d.Maara);
+      })
+      .attr("width", xScale.rangeBand())
+      .attr("height", function(d) {
+        return yScale(0) - yScale(d.Maara);
+      })
+      .attr("fill", function() {
+        return "rgb(0, 0, 255)";
+      });
+
+    svg.selectAll("text")
+      .data(currentData)
+      .transition()
+      .ease("linear")
+      .duration(500)
+      .each("start", function() {
+        d3.select(this)
+          .attr("fill", "black");
+      })
+      .text(function(d) {
+        if (d.Koodi.length < 10) {
+          return d.Koodi;
+        } else {
+          return d.Koodi.slice(0,3) + "...";
+        }
+      })
+      .attr("x", function(d, i) {
+        return xScale(i) + xScale.rangeBand() / 2;
+      })
+      .attr("y", function(d) {
+        return yScale(d.Maara) + 10;
+      })
+      .each("end", function() {
+        d3.select(this)
+          .attr("fill", "white");
+      });
+
+    svg.select(".y.axis")
+    .transition()
+    .duration(1000)
+    .call(yAxis);
+
+  }
 }
 
 // initialize("./data/countriesAsTSV.tsv", draw);

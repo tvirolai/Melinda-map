@@ -1,0 +1,11 @@
+Kirjastojen maailma
+
+Kirjastometatieto avautuu
+
+Kirjastotietokantojen sisältämän datan julkaiseminen ja yleisön käytettäväksi tarjoaminen avoimena datana on kiehtova suuntaus, johon liittyy jännittäviä mahdollisuuksia. Toistaiseksi kirjastojärjestelmät ovat olleet hyvin pitkälti suljettuja siiloja, joiden dataa on vaihdettu lähinnä järjestelmien välillä. Ohjelmistokehittäjien ja muun yleisön saataville bibliografista dataa on tarjottu lähinnä tempausluontoisesti. Tästä esimerkkejä ovat Turun seudun Vaski-kirjastojen, pääkaupunkiseudun HelMet-kirjastojen sekä Pirkanmaan seudun PIKI-kirjastojen julkaisemat kokoelmadumpit (http://metadata.helmet-kirjasto.fi/data.html, http://palvelut2.tampere.fi/tietovaranto/tietovaranto.php?id=102), jotka kuitenkin tätä kirjoitettaessa ovat jo 3-4 vuoden ikäisiä. Näistä HelMet tarjoaa lisäksi avoimen hakurajapinnan (http://metadata.helmet-kirjasto.fi/) ajantasaiseen aineistokokoelmaan kohdistettaviin kyselyihin, joskin vain aivan perushaut ovat tällä hetkellä mahdollisia.
+
+----
+
+Toteutus
+
+Aloitin koostamalla listauksen kaikkien Melindan tietueiden 008-kenttien julkaisumaakirjauksista (kuitenkin siten, että osakohteellisesta aineistosta vain emotietueen kirjaus huomioitiin). Tässä käytin pääosin Melinda-ylläpidon sisäisessä käytössä olevaa CVS-dumppia.
